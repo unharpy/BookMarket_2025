@@ -1,10 +1,8 @@
 package kr.ac.kopo.minn.bookmarket.vaildator;
 
-import jakarta.validation.Constraint;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import kr.ac.kopo.minn.bookmarket.domain.Book;
-import kr.ac.kopo.minn.bookmarket.repository.BookRepository;
 import kr.ac.kopo.minn.bookmarket.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -26,7 +24,7 @@ public class BookIdValidator implements ConstraintValidator<BookId, String> {
             return true;
         }
 
-        if(book == null){
+        if(book != null){
             return false;
         }
         return true;
