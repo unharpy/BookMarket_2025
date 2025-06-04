@@ -69,7 +69,7 @@ public class BookController {
     public String requestBooksByCategory(@PathVariable("category")String category, Model model) {
         List<Book> booksByCategory = bookService.getBookListByCategory(category);
         if (booksByCategory == null || booksByCategory.isEmpty()) {
-            throw new CategoryException();
+            throw new CategoryException(category);
         }
         model.addAttribute("bookList", booksByCategory);
         return "books";
@@ -140,6 +140,16 @@ public class BookController {
         mav.addObject("exception", e.toString());
         mav.addObject("url", request.getRequestURL()+"?"+request.getQueryString());
         mav.setViewName("errorBook");
+        return mav;
+    }
+
+    @ExceptionHandler(value = {CategoryException.class})
+    public ModelAndView handleException(HttpServletRequest request, CategoryException e) {
+        ModelAndView mav = new ModelAndView();
+//        mav.addObject("invalidBookId", e.getBookId());
+        mav.addObject("exception", e.toString());
+        mav.addObject("url", request.getRequestURL()+"?"+request.getQueryString());
+        mav.setViewName("errorCommon");
         return mav;
     }
 }

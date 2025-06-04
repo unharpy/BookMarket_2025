@@ -8,9 +8,12 @@ import org.springframework.web.servlet.ModelAndView;
 @ControllerAdvice
 public class CommonException {
     @ExceptionHandler(value = RuntimeException.class)
-    private ModelAndView handleCommonException(Exception e) {
+    private ModelAndView handleCommonException(HttpServletRequest request,CategoryException e) {
         ModelAndView mav = new ModelAndView();
         mav.addObject("exception", e.toString());
+        mav.addObject("category", e.getCategory());
+        mav.addObject("url", request.getRequestURL());
+        mav.addObject("errorMessage", e.getErrormessage());
         mav.setViewName("errorCommon");
         return mav;
     }
